@@ -1,6 +1,5 @@
 package ConnectFour;
 
-
 import static ConnectFour.ConnectFour.*;
 import static ConnectFour.libBoard.makeMove;
 
@@ -8,17 +7,16 @@ public class AlphaBetaCut {
 
 
     public static int alphaBetaCut(Board b) {
-        int val[] = new int[W+1];
-        int v = Integer.MIN_VALUE;
-        int maxId=1;
+        int GreatestUtility=Integer.MIN_VALUE;
+        int maxId=0;
         for(int i=1;i<=W;i++){
             Board descendant = makeMove(b,i,computer);
             if (descendant!=null) {
-                int prevV = v;
-                val[i]=minimizeValue(descendant, computer, 1,Integer.MIN_VALUE,Integer.MAX_VALUE);
-                v = Math.max(v, val[i]);
-                if (v!=prevV){
-                    maxId = i;
+
+                int act=minimizeValue(descendant, computer, 1,Integer.MIN_VALUE,Integer.MAX_VALUE);
+                if (act > GreatestUtility){
+                    GreatestUtility=act;
+                    maxId=i;
                 }
             }
         }
@@ -35,7 +33,7 @@ public class AlphaBetaCut {
                 v = Math.max(v, minimizeValue(descendant, (player == computer) ? (human) : computer, depth + 1, alpha, beta));
                 if (v>= beta)
                     return v;
-                beta = Math.max(alpha,v);
+                alpha = Math.max(alpha,v);
             }
         }
         return v;

@@ -7,17 +7,16 @@ public class MiniMax {
 
     //Must return the column to play [1-7]
     public static int minimaxAlg(Board b) {
-        int val[] = new int[W+1];
-        int v = Integer.MIN_VALUE;
-        int maxId=1;
+        int GreatestUtility=Integer.MIN_VALUE;
+        int maxId=0;
         for(int i=1;i<=W;i++){
             Board descendant = makeMove(b,i,computer);
             if (descendant!=null) {
-                int prevV = v;
-                val[i]=minimizeValue(descendant, computer, 1);
-                v = Math.max(v, val[i]);
-                if (v!=prevV){
-                    maxId = i;
+
+                int act=minimizeValue(descendant, computer, 1);
+                if (act > GreatestUtility){
+                    GreatestUtility=act;
+                    maxId=i;
                 }
             }
         }
