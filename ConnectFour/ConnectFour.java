@@ -48,8 +48,27 @@ public class ConnectFour {
                 option = scan.nextInt();
             }
         }
+
+
+
+
+
         System.out.print("Now select the maximum depth for the algorithm: ");
         maxDepth=scan.nextInt();
+        System.out.println("Finally, choose who plays first");
+        System.out.println("1 - human");
+        System.out.println("2 - computer");
+        System.out.print("Enter your option: ");
+        char p1;
+        char p2;
+        int playOpt = scan.nextInt();
+        if (playOpt==1){
+            p1=human;
+            p2=computer;
+        }else{
+            p1=computer;
+            p2=human;
+        }
         System.out.println();
         if (option == 1) {
             System.out.println("******************** \tCONNECT FOUR (with Minimax)\t ********************\n");
@@ -65,13 +84,13 @@ public class ConnectFour {
             Game loop, for every move from either of the players it checks if there's a win
          */
 
-        while(Math.abs(corrVal)!=512 ||!b.isFull()) {
+        while(Math.abs(corrVal)!=512 && !b.isFull()) {
 
-            drawGameInterface(b, computer);
-            corrVal = b.checkVictory(computer);
-            if (Math.abs(corrVal)!=512 || !b.isFull()){
-                drawGameInterface(b,human);
-                corrVal=b.checkVictory(human);
+            drawGameInterface(b, p1);
+            corrVal = b.checkVictory(p1);
+            if (Math.abs(corrVal)!=512 && !b.isFull()){
+                drawGameInterface(b,p2);
+                corrVal=b.checkVictory(p2);
             }
         }
         drawFinalScreen(b,corrVal);
@@ -85,9 +104,9 @@ public class ConnectFour {
     private static void drawFinalScreen(Board b, int victoryResult){
         System.out.println("\n\n====================The Game as ended=======================");
         b.print();
-        if (b.isFull() && Math.abs(victoryResult)!=512) {
+        if (Math.abs(victoryResult)==512) {
             System.out.println("The winner was: " + ((victoryResult == 512) ? computer : human));
-        }else System.out.println("It's a draw, shame on you!!!");
+        }else if (b.isFull()) System.out.println("It's a draw, shame on you!!!");
 
     }
 
