@@ -1,7 +1,5 @@
 package ConnectFour;
 
-import java.util.LinkedList;
-
 import static ConnectFour.ConnectFour.W;
 import static ConnectFour.ConnectFour.H;
 import static ConnectFour.ConnectFour.maxPiecesPerType;
@@ -13,8 +11,13 @@ public class Board {
     int piecesPerColumn[];
     int countComputer;
     int countHuman;
-    static int size=3;
+    final int SIZE = 3;
 
+
+
+    /*
+        Creates a new and empty board
+     */
     Board(){
         countComputer=0;
         countHuman =0;
@@ -27,6 +30,9 @@ public class Board {
         piecesPerColumn = new int[W];
     }
 
+    /*
+        Checks if the board is full
+     */
     public boolean isFull(){
         boolean isFull = true;
         for(int i=0;i<W;i++){
@@ -38,8 +44,9 @@ public class Board {
         return isFull;
     }
 
-
-
+    /*
+        Duplicates a Board
+     */
     Board(Board b){
         pieces = new char[H][W];
         for(int i=0;i<H;i++){
@@ -55,6 +62,10 @@ public class Board {
         countHuman = b.countHuman;
     }
 
+
+    /*
+        prints the board
+     */
     void print(){
         for(int i=0;i<H;i++){
             for(int j=0;j<W;j++){
@@ -68,6 +79,10 @@ public class Board {
         System.out.println();
     }
 
+
+    /*
+        It verifies if the move is possible
+     */
     boolean checkMovePossible(int column,char player){
         if (column>=0 && column<W) {
             if (player == human && countHuman < maxPiecesPerType) {
@@ -84,6 +99,9 @@ public class Board {
         return false;
     }
 
+    /*
+        Performs a move if it is possible, else returns false
+     */
     boolean makeMove(int column,char player){
         column--;
         if (checkMovePossible(column,player)){
@@ -98,6 +116,13 @@ public class Board {
         return false;
     }
 
+
+
+
+
+    /*
+        checkVictory calls the utility value for the board
+     */
 
     int checkVictory(char player){
         return -getUtilityValue2(player);
@@ -142,8 +167,8 @@ public class Board {
     private int checkHorizontal() {
         int numberOfOs = 0, numberOfXs = 0, result = 0;
         for (int i = 0; i < H; i++) {
-            for (int j = 0; j + size < W; j++) {
-                for (int k = j; k <= j + size; k++) {
+            for (int j = 0; j + SIZE < W; j++) {
+                for (int k = j; k <= j + SIZE; k++) {
                     if (pieces[i][k] == computer) {
                         numberOfOs++;
                     } else if (pieces[i][k] == human) {
@@ -177,8 +202,8 @@ public class Board {
     private int checkVertical() {
         int numberOfOs = 0, numberOfXs = 0, result = 0;
         for (int j = 0; j < W; j++) {
-            for (int i = 0; i + size < H; i++) {
-                for (int k = i; k <= i + size; k++) {
+            for (int i = 0; i + SIZE < H; i++) {
+                for (int k = i; k <= i + SIZE; k++) {
                     if (pieces[k][j] == computer) {
                         numberOfOs++;
                     } else if (pieces[k][j] == human) {
@@ -212,9 +237,9 @@ public class Board {
     private int checkDiagonalTRCtoLLC () {
         // top right corner -> lower left corner
         int numberOfOs = 0, numberOfXs = 0, result = 0;
-        for (int i = 0; i+size < H; i++) {
-            for (int j = W-1; j-size>=0; j--) {
-                for (int k=i, l=j; k<=i+size && l>=j-size; k++, l--) {
+        for (int i = 0; i+ SIZE < H; i++) {
+            for (int j = W-1; j- SIZE >=0; j--) {
+                for (int k = i, l = j; k<=i+ SIZE && l>=j- SIZE; k++, l--) {
                     if (pieces[k][l] == computer) {
                         numberOfOs++;
                     } else if (pieces[k][l] == human) {
@@ -248,9 +273,9 @@ public class Board {
     private int checkDiagonalTLCtoLRC () {
         // top left corner -> lower right corner
         int numberOfOs = 0, numberOfXs = 0, result = 0;
-        for (int i=0; i+size < H; i++) {
-            for (int j=0; j+size < W; j++) {
-                for (int k=i, l=j; k<=i+size && l<=j+size; k++, l++) {
+        for (int i = 0; i+ SIZE < H; i++) {
+            for (int j = 0; j+ SIZE < W; j++) {
+                for (int k = i, l = j; k<=i+ SIZE && l<=j+ SIZE; k++, l++) {
                     if (pieces[k][l] == computer) {
                         numberOfOs++;
                     } else if (pieces[k][l] == human) {

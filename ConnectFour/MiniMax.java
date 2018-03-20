@@ -5,7 +5,11 @@ import static ConnectFour.libBoard.makeMove;
 
 public class MiniMax {
 
-    //Must return the column to play [1-7]
+    /*
+        Calls the minimax algorithm
+        Must return the column to play [1-7]
+    */
+
     public static int minimaxAlg(Board b) {
         int GreatestUtility=Integer.MIN_VALUE;
         int maxId=0;

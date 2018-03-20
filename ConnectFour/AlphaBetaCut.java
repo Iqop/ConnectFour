@@ -5,6 +5,10 @@ import static ConnectFour.libBoard.makeMove;
 
 public class AlphaBetaCut {
 
+   /*
+        Calls the minimax algorithm with alpha beta cut
+        Must return the column to play [1-7]
+    */
 
     public static int alphaBetaCut(Board b) {
         int GreatestUtility=Integer.MIN_VALUE;

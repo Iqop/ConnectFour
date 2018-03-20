@@ -24,9 +24,13 @@ public class ConnectFour {
         //Making a new Board for the game
         Board b  = new Board();
         /*
-            The human starts, remember humans are X's
+            The computer starts, remember humans are X's
          */
 
+
+        /*
+            Displaying the menu
+         */
 
         System.out.print("Choose the \"algorithm\" you want to use:\n1) Simple Minimax\n2) Minimax with Alpha Beta Cut\n");
         System.out.print("\nInsert option: \t");
@@ -57,6 +61,10 @@ public class ConnectFour {
         }
 
 
+        /*
+            Game loop, for every move from either of the players it checks if there's a win
+         */
+
         while(Math.abs(corrVal)!=512 ||!b.isFull()) {
 
             drawGameInterface(b, computer);
@@ -68,21 +76,12 @@ public class ConnectFour {
         }
         drawFinalScreen(b,corrVal);
 
-/*
-        //Testing
-        while(true){
 
-            System.out.println("Computer play");
-            b.print();
-            b.makeMove(scan.nextInt(),computer);
-            System.out.println("Check victory computer : "+b.checkVictory(computer) );
-            System.out.println("Human play");
-            b.print();
-            b.makeMove(scan.nextInt(),human);
-            System.out.println("Check victory human : "+b.checkVictory(human) );
-        }
-*/
     }
+    /*
+        Shows the final result of the game, win or draw
+     */
+
     private static void drawFinalScreen(Board b, int victoryResult){
         System.out.println("\n\n====================The Game as ended=======================");
         b.print();
@@ -91,6 +90,11 @@ public class ConnectFour {
         }else System.out.println("It's a draw, shame on you!!!");
 
     }
+
+    /*
+        Shows the game environment, for the human it asks for a column to play
+        If is the computer turn it runs minimax or minimax with alpha beta cut
+     */
 
     private static void drawGameInterface(Board b,char  player){
         if (player==human){
