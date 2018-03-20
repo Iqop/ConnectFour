@@ -85,11 +85,188 @@ public class Board {
 
 
     int checkVictory(char player){
-        return getUtilityValue(player);
+        return -getUtilityValue2(player);
+//        return getUtilityValue(player);
     }
 
+    private int getUtilityValue2(char player) {
+        int aux, result = 0;
 
-    int getUtilityValue(char player) {
+        if (player == human) result = 16;
+        else if (player == computer) result = -16;
+
+        aux = checkHorizontal();
+//        System.out.println("Aux horizontal: " + aux);
+        if (aux == 512 && player == human) return aux;
+        else if (aux == -512 && player == computer) return aux;
+        else result += aux;
+
+        aux = checkVertical();
+//        System.out.println("Aux vertical: " + aux);
+        if (aux == 512 && player == human) return aux;
+        else if (aux == -512 && player == computer) return aux;
+        else result += aux;
+
+        aux = checkDiagonalTRCtoLLC();
+//        System.out.println("Aux diagonal 1: " + aux);
+        if (aux == 512 && player == human) return aux;
+        else if (aux == -512 && player == computer) return aux;
+        else result += aux;
+
+        aux = checkDiagonalTLCtoLRC();
+//        System.out.println("Aux diagonal 2: " + aux);
+        if (aux == 512 && player == human) return aux;
+        else if (aux == -512 && player == computer) return aux;
+        else result += aux;
+
+//        System.out.println("Resultado: " + result);
+
+        return result;
+    }
+
+    private int checkHorizontal() {
+        int numberOfOs = 0, numberOfXs = 0, result = 0;
+        for (int i = 0; i < H; i++) {
+            for (int j = 0; j + size < W; j++) {
+                for (int k = j; k <= j + size; k++) {
+                    if (pieces[i][k] == computer) {
+                        numberOfOs++;
+                    } else if (pieces[i][k] == human) {
+                        numberOfXs++;
+                    }
+                }
+                if (numberOfOs == 4 && numberOfXs == 0) {
+                    return -512;
+                } else if (numberOfXs == 4 && numberOfOs == 0) {
+                    return 512;
+                } else if (numberOfOs == 3 && numberOfXs == 0) {
+                    result -= 50;
+                } else if (numberOfOs == 2 && numberOfXs == 0) {
+                    result -= 10;
+                } else if (numberOfOs == 1 && numberOfXs == 0) {
+                    result -= 1;
+                } else if (numberOfOs == 0 && numberOfXs == 1) {
+                    result += 1;
+                } else if (numberOfOs == 0 && numberOfXs == 2) {
+                    result += 10;
+                } else if (numberOfOs == 0 && numberOfXs == 3) {
+                    result += 50;
+                }
+                numberOfOs = 0;
+                numberOfXs = 0;
+            }
+        }
+        return result;
+    }
+
+    private int checkVertical () {
+        int numberOfOs = 0, numberOfXs = 0, result = 0;
+        for (int j = 0; j < W; j++) {
+            for (int i = 0; i + size < H; i++) {
+                for (int k = i; k <= i + size; k++) {
+                    if (pieces[k][j] == computer) {
+                        numberOfOs++;
+                    } else if (pieces[k][j] == human) {
+                        numberOfXs++;
+                    }
+                }
+                if (numberOfOs == 4 && numberOfXs == 0) {
+                    return -512;
+                } else if (numberOfXs == 4 && numberOfOs == 0) {
+                    return 512;
+                } else if (numberOfOs == 3 && numberOfXs == 0) {
+                    result -= 50;
+                } else if (numberOfOs == 2 && numberOfXs == 0) {
+                    result -= 10;
+                } else if (numberOfOs == 1 && numberOfXs == 0) {
+                    result -= 1;
+                } else if (numberOfOs == 0 && numberOfXs == 1) {
+                    result += 1;
+                } else if (numberOfOs == 0 && numberOfXs == 2) {
+                    result += 10;
+                } else if (numberOfOs == 0 && numberOfXs == 3) {
+                    result += 50;
+                }
+                numberOfOs = 0;
+                numberOfXs = 0;
+            }
+        }
+        return result;
+    }
+
+    private int checkDiagonalTRCtoLLC () {
+        // top right corner -> lower left corner
+        int numberOfOs = 0, numberOfXs = 0, result = 0;
+        for (int i = 0; i+size < H; i++) {
+            for (int j = W-1; j-size>=0; j--) {
+                for (int k=i, l=j; k<=i+size && l>=j-size; k++, l--) {
+                    if (pieces[k][l] == computer) {
+                        numberOfOs++;
+                    } else if (pieces[k][l] == human) {
+                        numberOfXs++;
+                    }
+                }
+                if (numberOfOs == 4 && numberOfXs == 0) {
+                    return -512;
+                } else if (numberOfXs == 4 && numberOfOs == 0) {
+                    return 512;
+                } else if (numberOfOs == 3 && numberOfXs == 0) {
+                    result -= 50;
+                } else if (numberOfOs == 2 && numberOfXs == 0) {
+                    result -= 10;
+                } else if (numberOfOs == 1 && numberOfXs == 0) {
+                    result -= 1;
+                } else if (numberOfOs == 0 && numberOfXs == 1) {
+                    result += 1;
+                } else if (numberOfOs == 0 && numberOfXs == 2) {
+                    result += 10;
+                } else if (numberOfOs == 0 && numberOfXs == 3) {
+                    result += 50;
+                }
+                numberOfOs = 0;
+                numberOfXs = 0;
+            }
+        }
+        return result;
+    }
+
+    private int checkDiagonalTLCtoLRC () {
+        // top left corner -> lower right corner
+        int numberOfOs = 0, numberOfXs = 0, result = 0;
+        for (int i=0; i+size < H; i++) {
+            for (int j=0; j+size < W; j++) {
+                for (int k=i, l=j; k<=i+size && l<=j+size; k++, l++) {
+                    if (pieces[k][l] == computer) {
+                        numberOfOs++;
+                    } else if (pieces[k][l] == human) {
+                        numberOfXs++;
+                    }
+                }
+                if (numberOfOs == 4 && numberOfXs == 0) {
+                    return -512;
+                } else if (numberOfXs == 4 && numberOfOs == 0) {
+                    return 512;
+                }  else if (numberOfOs == 3 && numberOfXs == 0) {
+                    result -= 50;
+                } else if (numberOfOs == 2 && numberOfXs == 0) {
+                    result -= 10;
+                } else if (numberOfOs == 1 && numberOfXs == 0) {
+                    result -= 1;
+                } else if (numberOfOs == 0 && numberOfXs == 1) {
+                    result += 1;
+                } else if (numberOfOs == 0 && numberOfXs == 2) {
+                    result += 10;
+                } else if (numberOfOs == 0 && numberOfXs == 3) {
+                    result += 50;
+                }
+                numberOfOs = 0;
+                numberOfXs = 0;
+            }
+        }
+        return result;
+    }
+
+    private int getUtilityValue(char player) {
         boolean isFull = true;
         for(int i=0;i<W;i++){
             if(piecesPerColumn[i]<H){
@@ -363,5 +540,8 @@ public class Board {
         }
         return totalUtility;
     }
+
+
+
 }
 
