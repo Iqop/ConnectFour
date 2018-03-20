@@ -26,6 +26,20 @@ public class Board {
         }
         piecesPerColumn = new int[W];
     }
+
+    public boolean isFull(){
+        boolean isFull = true;
+        for(int i=0;i<W;i++){
+            if(piecesPerColumn[i]<H){
+                isFull=false;
+                break;
+            }
+        }
+        return isFull;
+    }
+
+
+
     Board(Board b){
         pieces = new char[H][W];
         for(int i=0;i<H;i++){
@@ -53,6 +67,7 @@ public class Board {
         }
         System.out.println();
     }
+
     boolean checkMovePossible(int column,char player){
         if (column>=0 && column<W) {
             if (player == human && countHuman < maxPiecesPerType) {
@@ -120,8 +135,8 @@ public class Board {
         else result += aux;
 
 //        System.out.println("Resultado: " + result);
-
         return result;
+
     }
 
     private int checkHorizontal() {
@@ -159,7 +174,7 @@ public class Board {
         return result;
     }
 
-    private int checkVertical () {
+    private int checkVertical() {
         int numberOfOs = 0, numberOfXs = 0, result = 0;
         for (int j = 0; j < W; j++) {
             for (int i = 0; i + size < H; i++) {
@@ -265,6 +280,11 @@ public class Board {
         }
         return result;
     }
+
+
+/*
+
+    //NOT fully working (error on odd depth greather than 5)
 
     private int getUtilityValue(char player) {
         boolean isFull = true;
@@ -542,6 +562,6 @@ public class Board {
     }
 
 
-
+*/
 }
 

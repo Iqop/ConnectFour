@@ -57,11 +57,11 @@ public class ConnectFour {
         }
 
 
-        while(Math.abs(corrVal)!=512 ) {
+        while(Math.abs(corrVal)!=512 ||!b.isFull()) {
 
             drawGameInterface(b, computer);
             corrVal = b.checkVictory(computer);
-            if (Math.abs(corrVal)!=512){
+            if (Math.abs(corrVal)!=512 || !b.isFull()){
                 drawGameInterface(b,human);
                 corrVal=b.checkVictory(human);
             }
@@ -86,7 +86,9 @@ public class ConnectFour {
     private static void drawFinalScreen(Board b, int victoryResult){
         System.out.println("\n\n====================The Game as ended=======================");
         b.print();
-        System.out.println("The winner was: "+((victoryResult==512)?computer:human));
+        if (b.isFull() && Math.abs(victoryResult)!=512) {
+            System.out.println("The winner was: " + ((victoryResult == 512) ? computer : human));
+        }else System.out.println("It's a draw, shame on you!!!");
 
     }
 
